@@ -19,7 +19,7 @@ int main() {
         cin >> U >> V;
         degrees[U]++;
         degrees[V]++;
-        adj[U][V] = adj[V][U] = true;
+        adj[U][V] = adj[V][U] = false;
     }
     
     // Contar vértices con grado impar
