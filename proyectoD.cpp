@@ -1,42 +1,15 @@
 #include <iostream>
 using namespace std;
 
-void leerEntrada(int &N, int &M, int &T, int &P, int grados[], bool conexiones[][11])
+void leerEntrada(int &vertices, int &aristas, int &tiempoLimite, int &tiempoArista, int grados[], bool conexiones[][11])
 {
-    cin >> N >> M;
-    cin >> T >> P;
+    cin >> vertices >> aristas;
+    cin >> tiempoLimite >> tiempoArista;
 
-    if (N < 2 || N > 10)
-    {
-        cout << "Error: N debe estar entre 2 y 10." << endl;
-        exit(1);
-    }
-    if (M < 1 || M > 20)
-    {
-        cout << "Error: M debe estar entre 1 y 20." << endl;
-        exit(1);
-    }
-    if (T < 1)
-    {
-        cout << "Error: T debe ser al menos 1." << endl;
-        exit(1);
-    }
-    if (P < 1)
-    {
-        cout << "Error: P debe ser al menos 1." << endl;
-        exit(1);
-    }
-
-    for (int i = 0; i < M; ++i)
+    for (int i = 0; i < aristas; ++i)
     {
         int U, V;
         cin >> U >> V;
-
-        if (U < 1 || U > N || V < 1 || V > N || U == V)
-        {
-            cout << "Error: Puentes deben conectar zonas válidas." << endl;
-            exit(1);
-        }
 
         grados[U]++;
         grados[V]++;
@@ -58,9 +31,9 @@ int contarVerticesImpares(int N, const int grados[])
     return impares;
 }
 
-void resolverProblema(int N, int T, int P, const int grados[])
+void resolverProblema(int vertices, int tiempoLimite, int tiempoArista, const int grados[])
 {
-    int impares = contarVerticesImpares(N, grados);
+    int impares = contarVerticesImpares(vertices, grados);
 
     if (impares == 0)
     {
@@ -76,7 +49,7 @@ void resolverProblema(int N, int T, int P, const int grados[])
 
     int puentes_necesarios = impares / 2;
 
-    if (puentes_necesarios * P <= T)
+    if (puentes_necesarios * tiempoArista <= tiempoLimite)
     {
         cout << "Es posible modificar la ciudad" << endl;
     }
@@ -88,12 +61,12 @@ void resolverProblema(int N, int T, int P, const int grados[])
 
 int main()
 {
-    int N, M, T, P;
-    int grados[11] = {0};              // Tamaño fijo 11 (para índices 1-10)
-    bool conexiones[11][11] = {false}; // Matriz 11x11
+    int vertices, aristas, tiempoLimite, tiempoArista;
+    int grados[11] = {0};
+    bool conexiones[11][11] = {false};
 
-    leerEntrada(N, M, T, P, grados, conexiones);
-    resolverProblema(N, T, P, grados);
+    leerEntrada(vertices, aristas, tiempoLimite, tiempoArista, grados, conexiones);
+    resolverProblema(vertices, tiempoLimite, tiempoArista, grados);
 
     return 0;
 }
